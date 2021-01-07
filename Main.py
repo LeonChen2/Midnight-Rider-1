@@ -46,8 +46,7 @@ YOU'VE SEEN IT BEFORE, BUT ONLY ON TV.
 CHOICES = """
     ----
     A. Eat tofu
-    S. Turn around and shoot at agents
-    M. Drive at moderate speed.
+    B. Drive at moderate speed.
     C. Speed ahead at full throttle
     D. Stop and Refuel (NO FOOD AVAILABLE)
     E. Status Check
@@ -86,9 +85,12 @@ def main():
 
     # MAIN LOOP
     while not done:
+
+
+
         # Random events
         # FIDO - refills your food (5%)
-        if food < 3 and random.random() < 0.05:
+        if tofu < 3 and random.random() < 0.05:
             # Refill tofu
             tofu = MAX_TOFU
             # Player feedback
@@ -133,18 +135,7 @@ def main():
                 print()
 
 
-        if user_choice == "s":
 
-            random.randrange(1,5)
-
-
-
-            players_distance_now = random.randrange(2, 6)
-            agents_distance_now = random.randrange(1,5)
-
-            fuel -= random.randrange(3, 9)
-            kms_travelled += players_distance_now
-            agents_distance -= players_distance_now - agents_distance_now
 
         if user_choice == "c":
             pass
@@ -167,7 +158,7 @@ def main():
             print(f"-------- You traveled {players_distance_now} kms.")
             print()
 
-        if user_choice == "m":
+        if user_choice == "b":
             pass
             players_distance_now = random.randrange(5, 11)
             agents_distance_now = random.randrange(7, 15)
@@ -196,6 +187,11 @@ def main():
         elif user_choice == "q":
             done = True
             print("Thanks for playing. Play again soon!")
+
+            # HUnger
+            if user_choice not in ["a", "e"]:
+                hunger += random.randrange(5,13)
+
 
         time.sleep(1.5)
 
