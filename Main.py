@@ -2,6 +2,7 @@
 # Midnight Rider
 # A text-based adventure game.
 # Gamespot gives it 9 out of 10.
+import random
 import sys
 import textwrap
 import time
@@ -18,6 +19,7 @@ REACH THE END BEFORE THE MAN GON GETCHU.
 
 CHOICES = """
     ----
+    D. Stop and refuel
     E. Status Check
     Q. QUIT 
     ----
@@ -34,6 +36,9 @@ def main():
     # Display introduction
     intro()
 
+    # CONSTANTS
+    MAX_FUEL_LEVEL = 50
+
     # Variables
     done = False
 
@@ -41,7 +46,7 @@ def main():
     agents_distance = -20       # 0 is the end
     turns = 0
     tofu = 3                    # 3 is max
-    fuel = 50                   # max is 50L
+    fuel = MAX_FUEL_LEVEL       # max is 50L
     hunger = 0
 
 
@@ -65,11 +70,19 @@ def main():
             print(f"\tAgents are {abs(agents_distance)} kms behind")
             print(f"\tYou have {tofu} tofu left")
             print(f"\t--------\n")
+
         if user_choice == "d":
-            pass
-            #
+            # Refueling
+            # Fill up the fuel tank
+            fuel = MAX_FUEL_LEVEL
 
+            # Consider the agents coming closer
+            agents_distance += random.randrange(7, 15)
 
+            # Give player feedback
+            print("-------- You filled the fuel tank.")
+            print("-------- The agents got closer...")
+            print("-------- ")
         elif user_choice == "q":
             done = True
 
