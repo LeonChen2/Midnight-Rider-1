@@ -19,7 +19,8 @@ REACH THE END BEFORE THE MAN GON GETCHU.
 
 CHOICES = """
     ----
-    D. Stop and refuel
+    C. Speed ahead at full throttle
+    D. Stop and Refuel (NO FOOD AVAILABLE)
     E. Status Check
     Q. QUIT 
     ----
@@ -71,6 +72,27 @@ def main():
             print(f"\tYou have {tofu} tofu left")
             print(f"\t--------\n")
 
+        if user_choice == "c":
+            pass
+            # Fast
+            players_distance_now = random.randrange(10, 16)
+            agents_distance_now = random.randrange(7, 15)
+
+            # Burn fuel
+            fuel -= random.randrange(5, 11)
+
+            # Player distance traveled
+            kms_travelled += players_distance_now
+
+            # Agents distance traveled
+            agents_distance -= players_distance_now - agents_distance_now
+
+            # Feedback to player
+            print()
+            print("ZOOOOOOM")
+            print(f"-------- You traveled {players_distance_now} kms.")
+            print()
+
         if user_choice == "d":
             # Refueling
             # Fill up the fuel tank
@@ -85,6 +107,7 @@ def main():
             print("-------- ")
         elif user_choice == "q":
             done = True
+            print("Thanks for playing. Play again soon!")
 
         time.sleep(1.5)
 
@@ -92,8 +115,6 @@ def main():
         #       user choice, and RNG
         # TODO: Random event generator
 
-        # Outro
-        print("Thanks for playing. Play again soon!")
 
 if __name__ == "__main__":
     main()
