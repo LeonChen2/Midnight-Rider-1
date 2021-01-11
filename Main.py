@@ -43,6 +43,72 @@ YOU'VE SEEN IT BEFORE, BUT ONLY ON TV.
 "BUMBLEBEE?..."
 """
 
+LOSE_HUNGER = """
+YOU START TO FEEL WEAK AND MALNOURISHED.
+YOU COLLAPSE ON THE WHEEL DUE TO YOUR LACK OF NUTRITION.
+
+PERHAPS YOU SHOULD HAVE LISTENED TO YOUR MOTHER
+AS A CHILD WHEN SHE TOLD YOU TO MAKE SURE YOU 
+EAT YOUR MEALS.
+
+THE AGENTS CLOSE IN ON YOU AND NEXT THING YOU KNOW,
+YOU WAKE UP IN A CONFESSION ROOM.
+FORCED TO GIVE UP ALL INFORMATION IN EXCHANGE
+FOR GOING TO PRISON ANYWAYS.
+"""
+
+LOSE_AGENT = """
+THE AGENTS HAVE CLOSED IN ON YOU.
+THERE ARE AT LEAST 20 CARS SURROUNDING YOU.
+THE LEAD CAR BUMPS YOUR PASSENGER SIDE.
+YOU MANAGE TO CORRECT YOUR STEERING
+TO KEEP YOU FROM CRASHING.
+
+YOU DIDN'T SEE THE AGENT'S CAR BESIDE YOU.
+THE DRIVER BUMPS YOUR CAR.
+AND THAT'S IT.
+
+YOU SPIN UNCONTROLLABLY.
+THE CAR FLIPS OVER AT LEAST TWO TIMES.
+OR MORE... YOU SEEM TO GAVE LOST COUNT.
+
+SIRENS.
+
+"ARE THE ALIVE?" THEY SAY AS YOU HEAR
+FOOTSTEPS GETTING CLOSER.
+"DOESN'T MATTER, ALL WE WANTED WAS THE CAR.
+
+YOU SEE A DOG SLOWLY STEP OUT OF THE
+OVERTURNED CAR.
+
+"YOU WILL NEVER STOP THE REVOLUTION,"
+THE DOG SEEMS TO SAY.
+
+IT WAS IN THE CAR THE WHOLE TIME,
+
+YOU DRIFT OFF INTO UNCONIOCNESS
+
+----GAME OVER----
+"""
+
+LOSE_FUEL = """
+
+YOUR CAR SPUTTERS AND SEEMS TO LET OUT
+A BIG SIGH. THERE'S NO MORE FUEL LEFT.
+
+THE COPS SURROUND YOU AND THEY STEP
+OUT OF THEIR CARS. THE LEAD AGENT
+RIPS THE PPR OPEN AND THROWS YOU OUT
+OF THE CAR.
+
+"WE FINALLY GOT IT."
+
+YOU FAILED.
+
+
+----GAME OVER----
+"""
+
 CHOICES = """
     ----
     A. Eat tofu
@@ -66,15 +132,17 @@ def main():
     type_text_output(INTRODUCTION)
 
     # CONSTANTS
+    MAX_HUNGER = 40
     MAX_FUEL_LEVEL = 50
     MAX_DISTANCE_TRAVELED = 100
     MAX_TOFU = 3
+    STARTING_AGENTS_DISTANCE = -20
 
     # Variables
     done = False
 
     kms_travelled = 99          # 100 km is the end
-    agents_distance = -20       # 0 is the end
+    agents_distance = STARTING_AGENTS_DISTANCE      # 0 is the end
     turns = 0
     tofu = MAX_TOFU             # 3 is max
     fuel = MAX_FUEL_LEVEL       # max is 50L
@@ -98,6 +166,7 @@ def main():
             print("******** it is filled magically")
             print("******** \"You're welcome!'\", says a small voice")
             print("******** The dog used its magic tofu cooking skills")
+
         # Check if reached END GAME
         # WIN - Traveled the Distance Req'd
         if kms_travelled > MAX_DISTANCE_TRAVELED:
@@ -107,6 +176,30 @@ def main():
             # Break
             break
 
+        # Lose - by hunger > Max_Hunger (50)
+        elif hunger > MAX_HUNGER:
+            pass
+            time.sleep(2)
+            type_text_output(LOSE_HUNGER)
+            break
+        # LOSE - agents reached you
+        elif agents_distance >= 0:
+            time.sleep(2)
+            type_text_output(LOSE_AGENTS)
+
+        # LOSE - fuel runs out
+        elif fuel <= 0:
+            time.sleep(2)
+            type_text_output(LOSE_FUEL)
+            break
+
+        # Display Hunger
+        if hunger > 40:
+            print("******** Your stomach rumbles. You need to eat something soon.")
+            time.sleep(1)
+        elif hunger > 25:
+            print("******** Your hunger is small but manageable.")
+            time.sleep(1)
 
         # Present the user their choices
         print(CHOICES)
@@ -186,18 +279,23 @@ def main():
             print("-------- ")
         elif user_choice == "q":
             done = True
+        else:
+            print("\tPlease choose a valid choice.")
             print("Thanks for playing. Play again soon!")
 
-            # HUnger
-            if user_choice not in ["a", "e"]:
-                hunger += random.randrange(5,13)
+            # Hunger
+            if user_choice in ["b", "c", "d"]:
+                hunger += random.randrange(8,18)
+                turns += 1
 
 
         time.sleep(1.5)
 
-        # TODO: Change the environment based on
-        #       user choice, and RNG
-        # TODO: Random event generator
+
+    # Outro
+    print()
+    print("Thanks for playing. PLay again soon!")
+    print(f"You finished the game in {turns} turns.")
 
 
 if __name__ == "__main__":
